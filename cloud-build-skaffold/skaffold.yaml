@@ -10,7 +10,8 @@ build:
     jib: {}
   tagPolicy:
     sha256: {}
-  googleCloudBuild: {}
+  googleCloudBuild:
+    projectID: ejmadkins-refinitiv
 
 profiles:
 - name: staging
