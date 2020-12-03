@@ -11,7 +11,7 @@ build:
   tagPolicy:
     sha256: {}
   googleCloudBuild:
-    projectID: ejmadkins-refinitiv
+    projectId: ejmadkins-refinitiv
 
 profiles:
 - name: staging
