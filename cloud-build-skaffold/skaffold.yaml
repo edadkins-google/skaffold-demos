@@ -9,7 +9,8 @@ build:
     context: .
     jib: {}
   tagPolicy:
-    gitCommit: {}
+    gitCommit:
+      variant: AbbrevCommitSha
   googleCloudBuild:
     projectId: ejmadkins-refinitiv
 
