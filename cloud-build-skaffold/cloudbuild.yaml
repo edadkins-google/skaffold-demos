@@ -40,7 +40,7 @@ steps:
   - >
     git checkout -b main;
     git config user.email "ejmadkins@google.com";
-    git add cloud-build-skaffold/k8s-manifests.yaml;
+    git add cloud-build-skaffold/kubernetes-manifests/deploy/k8s-manifests.yaml;
     git commit -m "update kubernetes manifests";
  
 - id: 'Push to Git'
