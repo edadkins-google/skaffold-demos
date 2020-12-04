@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: hello-world
+    app.kubernetes.io/managed-by: skaffold
+    env: prod
+    skaffold.dev/run-id: e3d8ffd7-01a6-4fbb-958d-83e2b2de5408
+  name: hello-world-dev-remote
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: hello-world
+  template:
+    metadata:
+      labels:
+        app: hello-world
+        app.kubernetes.io/managed-by: skaffold
+        skaffold.dev/run-id: e3d8ffd7-01a6-4fbb-958d-83e2b2de5408
+    spec:
+      containers:
+      - image: europe-west2-docker.pkg.dev/ejmadkins-refinitiv/hello-world/hello-world:latest@sha256:b8c486e8ceb3629359ae5f652836883b62a339b82a8f1ea9f813d3d58a931076
+        name: hello-world
