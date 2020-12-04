@@ -6,7 +6,7 @@ steps:
   args:
   - '-c'
   - |
-     skaffold render -f=skaffold.yaml -p=prod --loud=true --output=k8s-manifests.yaml
+     skaffold render -f=skaffold.yaml -p=prod --loud=true --skip-tests=true --output=k8s-manifests.yaml
   dir: 'cloud-build-skaffold'
 
 - name: gcr.io/cloud-builders/gcloud
