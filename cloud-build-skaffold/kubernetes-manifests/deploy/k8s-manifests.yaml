@@ -5,7 +5,7 @@ metadata:
     app: hello-world
     app.kubernetes.io/managed-by: skaffold
     env: prod
-    skaffold.dev/run-id: c696a0b5-aaa0-42f4-ab9e-f0ba79126a4a
+    skaffold.dev/run-id: b11af7e8-6540-405d-928c-b283cc396f44
   name: hello-world-dev-remote
 spec:
   replicas: 3
@@ -17,8 +17,8 @@ spec:
       labels:
         app: hello-world
         app.kubernetes.io/managed-by: skaffold
-        skaffold.dev/run-id: c696a0b5-aaa0-42f4-ab9e-f0ba79126a4a
+        skaffold.dev/run-id: b11af7e8-6540-405d-928c-b283cc396f44
     spec:
       containers:
-      - image: europe-west2-docker.pkg.dev/ejmadkins-refinitiv/hello-world/hello-world:d997341@sha256:f564d3c429d037d1e0bc0d3aeaf7ca0e695cb468c4ad600e94fb18ed352412c8
+      - image: europe-west2-docker.pkg.dev/ejmadkins-refinitiv/hello-world/hello-world:7ab8295@sha256:f564d3c429d037d1e0bc0d3aeaf7ca0e695cb468c4ad600e94fb18ed352412c8
         name: hello-world
