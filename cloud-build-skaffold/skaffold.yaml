@@ -9,7 +9,7 @@ build:
     context: .
     jib: {}
   tagPolicy:
-    sha256: {}
+    gitCommit: {}
   googleCloudBuild:
     projectId: ejmadkins-refinitiv
 
