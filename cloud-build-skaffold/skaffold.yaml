@@ -5,14 +5,14 @@ metadata:
 
 build:
   artifacts:
-  - image: europe-west2-docker.pkg.dev/ejmadkins-refinitiv/hello-world/hello-world
+  - image: europe-west2-docker.pkg.dev/ejmadkins-dev-workflow-demos/remote-registry/hello-world
     context: .
     jib: {}
   tagPolicy:
     gitCommit:
       variant: AbbrevCommitSha
   googleCloudBuild:
-    projectId: ejmadkins-refinitiv
+    projectId: ejmadkins-dev-workflow-demos
 
 profiles:
 - name: staging

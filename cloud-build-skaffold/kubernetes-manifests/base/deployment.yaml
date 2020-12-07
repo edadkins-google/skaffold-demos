@@ -15,5 +15,5 @@ spec:
         app: hello-world
     spec:
       containers:
-      - image: europe-west2-docker.pkg.dev/ejmadkins-refinitiv/hello-world/hello-world
+      - image: europe-west2-docker.pkg.dev/ejmadkins-dev-workflow-demos/remote-registry/hello-world
         name: hello-world
