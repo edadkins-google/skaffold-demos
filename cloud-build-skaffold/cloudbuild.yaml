@@ -9,47 +9,35 @@ steps:
      skaffold render -f=skaffold.yaml -p=prod --loud=true --output=kubernetes-manifests/deploy/k8s-manifests.yaml
   dir: 'cloud-build-skaffold'
 
-- name: gcr.io/cloud-builders/gcloud
-  entrypoint: 'bash'
-  args: [ '-c', 'gcloud secrets versions access latest --secret=secret-name > /root/.ssh/id_github' ]
-  volumes:
-  - name: 'ssh'
-    path: /root/.ssh
-
-# Set up git with key and domain
-- name: 'gcr.io/cloud-builders/git'
-  entrypoint: 'bash'
+- name: 'gcr.io/cloud-builders/gcloud'
+  id: Clone env repository
+  entrypoint: /bin/sh
   args:
   - '-c'
   - |
-    chmod 600 /root/.ssh/id_github
-    cat <<EOF >/root/.ssh/config
-    Hostname github.com
-    IdentityFile /root/.ssh/id_github
-    EOF
-    ssh-keyscan -t rsa github.com > /root/.ssh/known_hosts
-  volumes:
-  - name: 'ssh'
-    path: /root/.ssh
+    gcloud source repos clone cloudbuild-skaffold-env && \
+    cd cloudbuild-skaffold-env && \
+    git checkout candidate && \
+    git config user.email $(gcloud auth list --filter=status:ACTIVE --format='value(account)')
+  
+- name: 'gcr.io/cloud-builders/gcloud'
+  id: Copy manifest to cloudbuild-skaffold-env
+  entrypoint: /bin/sh
+  args:
+  - '-c'
+  - |
+     cp kubernetes-manifests/deploy/k8s-manifests.yaml cloudbuild-skaffold-env/k8s-manifests.yaml
 
-- id: 'Add manifests and check-in'
-  name: 'gcr.io/cloud-builders/git'
-  entrypoint: 'bash'
+- name: 'gcr.io/cloud-builders/gcloud'
+  id: Push manifest
+  entrypoint: /bin/sh
   args:
   - '-c'
-  - >
-    git checkout -b main;
-    git config user.email "ejmadkins@google.com";
-    git add cloud-build-skaffold/kubernetes-manifests/deploy/k8s-manifests.yaml;
-    git commit -m "update kubernetes manifests";
- 
-- id: 'Push to Git'
-  name: 'gcr.io/cloud-builders/git'
-  entrypoint: 'bash'
-  args:
-  - '-c'
-  - >
-    git push git@github.com:edadkins-google/skaffold-demos main;
-  volumes:
-  - name: 'ssh'
-    path: /root/.ssh
+  - |
+    set -x && \
+    cd cloudbuild-skaffold-env && \
+    git add k8s-manifests.yaml && \
+    git commit -m "Deploying image ${SHORT_SHA}
+    Built from commit ${COMMIT_SHA} of repository hello-cloudbuild-app
+    Author: $(git log --format='%an <%ae>' -n 1 HEAD)" && \
+    git push origin candidate
